@@ -5,7 +5,7 @@ A basic PHP application runs inside AWS Lambda.
 You can package this PHP application into Docker image, push to ECR, and deploy to Lambda, ECS/EKS, or EC2.
 
 The application can be deployed in an AWS account using
-the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in
+the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in
 the root folder contains the application definition.
 
 The top level folder is a typical AWS SAM project. The `app` directory is the nginx configuration with
@@ -21,7 +21,7 @@ WORKDIR /var/task/app
 RUN composer install --prefer-dist --optimize-autoloader --no-dev --no-interaction
 
 FROM public.ecr.aws/awsguru/php:82.2023.3.11.1
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 COPY --from=builder /var/task /var/task
 
 # config files
@@ -36,7 +36,7 @@ ADD php/php.d/extensions.ini   /opt/php/php.d/extensions.ini
 The following tools should be installed and configured.
 
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [Docker](https://www.docker.com/products/docker-desktop)
 
 ## Deploy to Lambda

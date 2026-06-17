@@ -16,7 +16,7 @@ Please note that using `sam local start-api` is not required for local developme
 
 ## Getting Started
 
-The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
 
 To run the application we are using the run.sh script located in the resources folder:
 
@@ -44,7 +44,7 @@ In the configuration we have to specify the AWS Lambda adapter as a layer and co
           REMOVE_BASE_PATH: /v1
           AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
       Layers:
-        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:27
+        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:28
 ```
 
 ### Remove the base path
@@ -58,7 +58,7 @@ This configuration tells the Adapter to remove `/v1` from http request path, so 
 The following tools should be installed and configured.
 
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [Maven](https://maven.apache.org/)
 * [Docker](https://www.docker.com/products/docker-desktop)
 

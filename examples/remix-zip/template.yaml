@@ -5,7 +5,7 @@ Description: >
 
   Sample SAM Template for remix-zip
   
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+# More info about Globals: https://github.com/aws/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 30
@@ -16,7 +16,7 @@ Resources:
     Properties:
       CodeUri: .
       Handler: run.sh
-      Runtime: nodejs20.x
+      Runtime: nodejs22.x
       MemorySize: 1024
       Architectures:
         - x86_64
@@ -26,7 +26,7 @@ Resources:
           RUST_LOG: info
           PORT: 3000
       Layers:
-        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:27
+        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:28
       Events:
         HttpEvents:
           Type: HttpApi

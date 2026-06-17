@@ -4,14 +4,15 @@ A basic express.js application example. You can build and test it locally as a t
 
 Using AWS Lambda Adapter, you can package this web application into Docker image, push to ECR, and deploy to Lambda, ECS/EKS, or EC2.
 
-The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
 
 The top level folder is a typical AWS SAM project. The `app` directory is an express.js application with a [Dockerfile](app/Dockerfile). 
 
 ```dockerfile
 FROM public.ecr.aws/docker/library/node:16.13.2-stretch-slim
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
-EXPOSE 8080
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
+ENV PORT=8000
+EXPOSE 8000
 WORKDIR "/var/task"
 ADD src/package.json /var/task/package.json
 ADD src/package-lock.json /var/task/package-lock.json
@@ -23,14 +24,14 @@ CMD ["node", "index.js"]
 Line 2 copies lambda adapter binary into /opt/extensions. This is the only change to run the express.js application on Lambda.
 
 ```dockerfile
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 ```
 
 ## Pre-requisites
 
 The following tools should be installed and configured. 
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [Node](https://nodejs.org/en/)
 * [Docker](https://www.docker.com/products/docker-desktop)
 
@@ -69,12 +70,12 @@ $ curl https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/
 We can run the same docker image locally, so that we know it can be deployed to ECS Fargate and EKS EC2 without code changes.
 
 ```shell
-$ docker run -d -p 8080:8080 {ECR Image}
+$ docker run -d -p 8000:8000 {ECR Image}
 
 ```
 
 Use curl to verify the docker container works.
 
 ```shell
-$ curl localhost:8080/ 
+$ curl localhost:8000/ 
 ```

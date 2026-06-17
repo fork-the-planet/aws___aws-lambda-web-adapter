@@ -10,15 +10,15 @@ AWS Lambda Web Adapter works with AWS managed Lambda runtimes via Lambda Layers.
 
 | Architecture | Layer ARN |
 |-------------|-----------|
-| x86_64 | `arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:27` |
-| arm64 | `arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:27` |
+| x86_64 | `arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:28` |
+| arm64 | `arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:28` |
 
 #### AWS China Regions
 
 | Region | Architecture | Layer ARN |
 |--------|-------------|-----------|
-| cn-north-1 (Beijing) | x86_64 | `arn:aws-cn:lambda:cn-north-1:041581134020:layer:LambdaAdapterLayerX86:27` |
-| cn-northwest-1 (Ningxia) | x86_64 | `arn:aws-cn:lambda:cn-northwest-1:069767869989:layer:LambdaAdapterLayerX86:27` |
+| cn-north-1 (Beijing) | x86_64 | `arn:aws-cn:lambda:cn-north-1:041581134020:layer:LambdaAdapterLayerX86:28` |
+| cn-northwest-1 (Ningxia) | x86_64 | `arn:aws-cn:lambda:cn-northwest-1:069767869989:layer:LambdaAdapterLayerX86:28` |
 
 ### 2. Set the Exec Wrapper
 
@@ -42,7 +42,7 @@ Resources:
       Runtime: nodejs20.x
       Handler: run.sh
       Layers:
-        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:27
+        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:28
       Environment:
         Variables:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
@@ -56,6 +56,6 @@ If you create your Zip package on Windows, your startup script (e.g. `run.sh`) m
 1. **Use LF line endings** — Windows defaults to CRLF (`\r\n`), which causes `/bin/sh` to fail with `cannot execute: required file not found`.
 2. **Set Unix file permissions to 755** — Zip files created on Windows don't preserve Unix execute permissions.
 
-Most zip utilities on Windows don't handle Unix permissions. You can work around this by using WSL, a build script that sets permissions explicitly, or a tool like `7-Zip` with the `-mcu` flag. See [#611](https://github.com/awslabs/aws-lambda-web-adapter/issues/611) for more details.
+Most zip utilities on Windows don't handle Unix permissions. You can work around this by using WSL, a build script that sets permissions explicitly, or a tool like `7-Zip` with the `-mcu` flag. See [#611](https://github.com/aws/aws-lambda-web-adapter/issues/611) for more details.
 
-For a complete working example, see the [Express.js in Zip](https://github.com/awslabs/aws-lambda-web-adapter/tree/main/examples/expressjs-zip) example.
+For a complete working example, see the [Express.js in Zip](https://github.com/aws/aws-lambda-web-adapter/tree/main/examples/expressjs-zip) example.

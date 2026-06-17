@@ -4,7 +4,7 @@ A basic FastMCP (Model Context Protocol) server example. You can build and test 
 
 Using AWS Lambda Web Adapter, you can package this web application into Docker image, push to ECR, and deploy to Lambda, ECS/EKS, or EC2.
 
-The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
 
 The top level folder is a typical AWS SAM project. The `my_mcp_server` directory is a FastMCP application with a [Dockerfile](my_mcp_server/Dockerfile).
 
@@ -15,7 +15,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir --target=/var/task/deps -r requirements.txt
 
 FROM --platform=linux/amd64 public.ecr.aws/docker/library/python:3.14-slim
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 ENV PORT=8000 PYTHONPATH=/var/task/deps
 ENV AWS_LWA_READINESS_CHECK_PATH=/healthz
 ENV AWS_LWA_READINESS_CHECK_HEALTHY_STATUS=100-499
@@ -28,14 +28,14 @@ CMD exec python -m uvicorn --port=$PORT app:app
 Line 7 copies lambda web adapter binary into /opt/extensions. This is the change to run the FastMCP application on Lambda.
 
 ```dockerfile
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 ```
 
 ## Pre-requisites
 
 The following tools should be installed and configured.
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [Python](https://www.python.org/)
 * [Docker](https://www.docker.com/products/docker-desktop)
 

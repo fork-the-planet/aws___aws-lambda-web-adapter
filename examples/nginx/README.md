@@ -5,7 +5,7 @@ A basic Nginx web server runs inside AWS Lambda.
 You can package this web server into Docker image, push to ECR, and deploy to Lambda, ECS/EKS, or EC2.
 
 The application can be deployed in an AWS account using
-the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in
+the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in
 the root folder contains the application definition.
 
 The top level folder is a typical AWS SAM project. The `app` directory is the nginx configuration with
@@ -14,7 +14,7 @@ a [Dockerfile](Dockerfile).
 ```dockerfile
 FROM public.ecr.aws/awsguru/nginx:1.23.2023.3.11.1
 
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 
 # config files
 ADD nginx/conf/nginx.conf /opt/nginx/conf/nginx.conf
@@ -28,7 +28,7 @@ EXPOSE 8080
 Line 3 copies Lambda adapter binary into /opt/extensions. This is the main change to run the Nginx server on Lambda.
 
 ```dockerfile
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 ```
 
 ## Pre-requisites
@@ -36,7 +36,7 @@ COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt
 The following tools should be installed and configured.
 
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [Docker](https://www.docker.com/products/docker-desktop)
 
 ## Deploy to Lambda

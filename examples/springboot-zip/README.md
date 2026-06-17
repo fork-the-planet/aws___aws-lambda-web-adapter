@@ -2,7 +2,7 @@
 
 A basic pet store application written with the Spring Boot 2 framework. You can build and test it locally as a typical Spring Boot 2 application.
 
-The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
 
 To run the application we are using the run.sh script located in the resources folder:
 
@@ -31,7 +31,7 @@ In the configuration we have to specify the AWS Lambda adapter as a layer and co
           REMOVE_BASE_PATH: /v1
           AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
       Layers:
-        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:27
+        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:28
 ```
 
 In this template, we enable SnapStart for this function. SnapStart drastically reduces cold start time for Java functions using Firecracker MicroVM snapshotting technology. Read more about SnapStart [here](https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html).
@@ -46,7 +46,7 @@ This configuration tells the Adapter to remove `/v1` from http request path, so 
 The following tools should be installed and configured.
 
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [Maven](https://maven.apache.org/)
 * [Docker](https://www.docker.com/products/docker-desktop)
 

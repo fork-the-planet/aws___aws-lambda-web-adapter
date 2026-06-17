@@ -4,7 +4,7 @@ A basic ASP.NET application example. You can build and test it locally as a typi
 
 Using AWS Lambda Adapter, you can package this web application into Docker image, push to ECR, and deploy to Lambda, ECS/EKS, or EC2.
 
-The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/awslabs/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
+The application can be deployed in an AWS account using the [Serverless Application Model](https://github.com/aws/serverless-application-model). The `template.yaml` file in the root folder contains the application definition.
 
 The top level folder is a typical AWS SAM project. The `src` directory is an ASP.NET application with a [Dockerfile](app/Dockerfile). 
 
@@ -23,7 +23,7 @@ RUN dotnet publish "AspNetLambdaWebAdapter.csproj" -c Release -o /app/publish
 
 FROM base AS final
 ENV ASPNETCORE_URLS=http://+:8080
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AspNetLambdaWebAdapter.dll"]
@@ -32,14 +32,14 @@ ENTRYPOINT ["dotnet", "AspNetLambdaWebAdapter.dll"]
 Line 12 copies lambda adapter binary into /opt/extensions. This is required to run ASP.NET application on Lambda. The `ASPNETCORE_URLS` environment variable is also set to 8080. This is required for the Lambda Web Adapter to work.
 
 ```dockerfile
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.1 /lambda-adapter /opt/extensions/lambda-adapter
 ```
 
 ## Pre-requisites
 
 The following tools should be installed and configured. 
 * [AWS CLI](https://aws.amazon.com/cli/)
-* [SAM CLI](https://github.com/awslabs/aws-sam-cli)
+* [SAM CLI](https://github.com/aws/aws-sam-cli)
 * [.NET 6](https://nodejs.org/en/)
 * [Docker](https://www.docker.com/products/docker-desktop)
 
